@@ -6,7 +6,7 @@ require 'tennis/version'
 Gem::Specification.new do |spec|
   spec.name          = "tennis"
   spec.version       = Tennis::VERSION
-  spec.authors       = ["Carlos Puchol"]
+  spec.authors       = ["Rohan Katyal", "Carlos Puchol"]
   spec.email         = ["cpg+git@amahi.org"]
   spec.summary       = %q{A gem to manage tennis scores.}
   spec.description   = %q{A gem to manage and validate tennis scores.}
