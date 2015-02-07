@@ -17,6 +17,8 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'bundler/setup'
+Bundler.setup
 require 'tennis'
 
 RSpec.configure do |config|

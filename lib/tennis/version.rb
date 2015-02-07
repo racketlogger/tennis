@@ -1,3 +1,3 @@
-module Tennis
-  VERSION = "0.0.3"
+class Tennis
+	VERSION = "0.0.4"
 end
