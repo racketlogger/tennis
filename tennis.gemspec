@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["cpg+git@amahi.org"]
   spec.summary       = %q{A gem to manage tennis scores.}
   spec.description   = %q{A gem to manage and validate tennis scores.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/racketlogger/tennis"
   spec.license       = "GPL"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec", "~> 3"
 end
