@@ -65,4 +65,34 @@ describe Tennis, "#scores" do
 end
 
 describe Tennis, "#points" do
+  it "returns 12 points in a three set win in a complete match" do
+    score = Tennis.new("6-4, 4-6, 6-4")
+    expect(score.points).to eq [12,8]
+  end
+
+  it "returns 14 points in two set win in a complete match" do
+    score = Tennis.new("4-6, 4-6")
+    expect(score.points).to eq [8,14]
+  end
+
+  it "returns a max of 8 points for the runners up in a complete match" do
+    score = Tennis.new("4-6, 6-2, 3-6")
+    expect(score.points).to eq [8,12]
+  end
+
+  it "return a max of 10 points for each player in an incomplete match" do
+    score = Tennis.new("7-6,6-7")
+    expect(score.points).to eq [10,10]
+  end
+
+  it "return a max of 10 points for each player in an incomplete match" do
+    score = Tennis.new("7-6,6-3,4-1")
+    expect(score.points).to eq [10,10]
+  end
+
+  it "return [0,0] for bad input" do
+    score = Tennis.new("8-1")
+    expect(score.points).to eq [0,0]
+  end
+
 end
