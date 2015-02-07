@@ -1,20 +1,19 @@
 require "tennis/version"
 
 class Tennis
-		def initialize(scores)
-			@scores = scores != 'default-1' && scores != 'default-2' ? scores.split(/[-,,]/).map(&:to_i) : scores
-			@result = (1 if scores == 'default-1') || (2 if scores == 'default-2') || :default
-			if @result == :default
-				# to check if score for only 1 set has been input
-				validation_1 = @scores.length == 2
-				# to check if any input > 7
-				validation_2 = @scores.any? { |score| score > 7 }
-				# to check if one of the input is 7 and the other is not 6 
-				# bad tie break input
-				validation_3 = false
-				@scores.each_slice(2).each {|r| validation_3 = true if r.any? {|score| score == 7} && !r.any? {|score| score == 6} }
-				@result = :error if validation_1 || validation_2 || validation_3
-			end
+	def initialize(scores)
+		@scores = scores != 'default-1' && scores != 'default-2' ? scores.split(/[-,,]/).map(&:to_i) : scores
+		@result = (1 if scores == 'default-1') || (2 if scores == 'default-2') || :default
+		if @result == :default
+			# to check if score for only 1 set has been input
+			validation_1 = @scores.length == 2
+			# to check if any input > 7
+			validation_2 = @scores.any? { |score| score > 7 }
+			# to check if one of the input is 7 and the other is not 6 
+			# bad tie break input
+			validation_3 = false
+			@scores.each_slice(2).each {|r| validation_3 = true if r.any? {|score| score == 7} && !r.any? {|score| score == 6} }
+			@result = :error if validation_1 || validation_2 || validation_3
 		end
 	end
 
