@@ -11,9 +11,9 @@ class Tennis
       validation_1 = @scores.length == 2
       # to check if any input > 7
       validation_2 = @scores.any? { |score| score > 7 }
-      # to check if one of the input is 7 and the other is not 6 
+      # to check if one of the input is 7 and the other is not 6
       # bad tie break input
-      validation_3 = false 
+      validation_3 = false
       @scores.each_slice(2).each {|r| validation_3 = true if r.any? {|score| score == 7} && !r.any? {|score| score == 6} }
       @result = :error if validation_1 || validation_2 || validation_3
       # if set score is not complete eg: 4-6,7-6,4-1
@@ -21,20 +21,24 @@ class Tennis
     end
   end
 
-  # getter method for the original score string 
-  def get_result
-    return self.result.to_s
+  # to_s
+  # return the score in string format
+  def to_s
+    score = []
+    (0...@scores.length).step(2).each do |i|
+      score << [@scores[i], @scores[i+1]].join('-')
+    end
+    score.join(', ')
   end
 
   # flip score ( P1-P2 to P2-P1)
   # returns the flipped score in string
-  def flip
-    flipped_score = ''
+  def flipped
+    flipped_score = []
     (0...@scores.length).step(2).each do |i|
-      flipped_score = flipped_score + @scores[i+1].to_s + '-' + @scores[i].to_s
-      flipped_score = flipped_score + ',' if !(i == @scores.length-2)
+      flipped_score << [@scores[i+1], @scores[i]].join('-')
     end
-    return flipped_score
+    flipped_score.join(', ')
   end
 
   # returns who won the match
