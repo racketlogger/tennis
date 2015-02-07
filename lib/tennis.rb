@@ -5,6 +5,8 @@ class Tennis
     @scores = scores != 'default-1' && scores != 'default-2' ? scores.split(/[-,,]/).map(&:to_i) : scores
     @result = (1 if scores == 'default-1') || (2 if scores == 'default-2') || :default
     if @result == :default
+      # check blank input ''
+      @result = :error if @scores.any? { |score| score.nil? || score == 0 }
       # to check if score for only 1 set has been input
       validation_1 = @scores.length == 2
       # to check if any input > 7
@@ -15,8 +17,24 @@ class Tennis
       @scores.each_slice(2).each {|r| validation_3 = true if r.any? {|score| score == 7} && !r.any? {|score| score == 6} }
       @result = :error if validation_1 || validation_2 || validation_3
       # if set score is not complete eg: 4-6,7-6,4-1
-      @scores.each_slice(2).each {|r| @result = :incomplete_match if r[0] < 6 && r[1] < 6 }
+      @scores.each_slice(2).each {|r| @result = :incomplete_match if r[0] < 6 && r[1] < 6 } if @result != :error
     end
+  end
+
+  # getter method for the original score string 
+  def get_result
+    return self.result.to_s
+  end
+
+  # flip score ( P1-P2 to P2-P1)
+  # returns the flipped score in string
+  def flip
+    flipped_score = ''
+    (0...@scores.length).step(2).each do |i|
+      flipped_score = flipped_score + @scores[i+1].to_s + '-' + @scores[i].to_s
+      flipped_score = flipped_score + ',' if !(i == @scores.length-2)
+    end
+    return flipped_score
   end
 
   # returns who won the match
@@ -43,7 +61,7 @@ class Tennis
   # helper method: called by RESULT method for valid matches with 2 sets
   def two_sets
     set_results = []
-    [0, 2].each do |i|
+    (0...@scores.length).step(2).each do |i|
       # tie breaker (assuming a 7 point tie breaker) or a 7-5 scores
       if @scores[i] == 7 || @scores[i+1] == 7
         set_results << (@scores[i] == 7 ? 1 : 2)
@@ -60,7 +78,7 @@ class Tennis
   # helper method: called by RESULT method for valid matches with 3 sets
   def three_sets
     set_results = []
-    [0, 2, 4].each do |i|
+    (0...@scores.length).step(2).each do |i|
       # tie breaker (assuming a 7 point tie breaker) or a 7-5 score
       if @scores[i] == 7 || @scores[i + 1] == 7
         set_results << (@scores[i] == 7 ? 1 : 2)

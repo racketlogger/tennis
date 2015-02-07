@@ -62,6 +62,11 @@ describe Tennis, "#scores" do
     expect(score.result).to eq :error
   end
 
+  it "checks invalid score: blank score '' " do
+    score = Tennis.new("")
+    expect(score.result).to eq :error
+  end
+
 end
 
 describe Tennis, "#points" do
@@ -93,6 +98,11 @@ describe Tennis, "#points" do
   it "return [0,0] for bad input" do
     score = Tennis.new("8-1")
     expect(score.points).to eq [0,0]
+  end
+
+  it "checks invalid score: blank score '' " do
+    score = Tennis.new("")
+    expect(score.points).to eq :error
   end
 
 end
