@@ -1,6 +1,9 @@
 # Tennis
 
+[![Gem Version](https://badge.fury.io/rb/tennis.svg)](http://badge.fury.io/rb/tennis) [![Build Status](https://travis-ci.org/racketlogger/tennis.svg)](https://travis-ci.org/racketlogger/tennis)
+
 Ruby gem with utilities to manage, print and validate tennis scores
+
 
 ## Installation
 
