@@ -39,7 +39,7 @@ describe Tennis, "#scores" do
 
   it "checks invalid score: difference in games won < 2" do
     score = Tennis.new("6-5,4-6,7-6")
-    expect(score.result).to eq :error
+    expect(score.result).to eq :incomplete_match
   end
 
   it "checks invalid score: only 1 set input" do
@@ -86,7 +86,7 @@ describe Tennis, "#points" do
   end
 
   it "return a max of 10 points for each player in an incomplete match" do
-    score = Tennis.new("7-6,6-3,4-1")
+    score = Tennis.new("7-6,4-6,4-1")
     expect(score.points).to eq [10,10]
   end
 
