@@ -46,7 +46,7 @@ class Tennis
   # :error (bad input for sure)
   # 1 (player-1 won)
   # 2 (player-2 won)
-  def result
+  def winner
     return @result if @result != :default
     return @result = (@scores.length == 4) ? two_sets : three_sets
   end
@@ -55,7 +55,7 @@ class Tennis
   # returns (points_player_1 , points_player_2)
   # returns (0,0) for bad input
   def points
-    @result = self.result
+    @result = winner
     (return [0, 0]) if @result == :error
     return (complete_match_points if @result == 1 || @result == 2) || incomplete_match_points
   end
@@ -101,7 +101,7 @@ class Tennis
   # helper method: called by POINTS for complete matches
   def complete_match_points
     points = [0, 0]
-    @result = self.result
+    @result = winner
     points[@result - 1] = (@scores.length == 6) ? 12 : 14
     runner_up = (@result == 1) ? 2 : 1
     runner_up_points = player_points(runner_up)
