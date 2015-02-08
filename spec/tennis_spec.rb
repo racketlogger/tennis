@@ -101,11 +101,9 @@ describe Tennis, "#points" do
 	end
 
 	it "checks invalid score: blank score '' " do
-		pending
 		score = Tennis.new("")
-		expect(score.points).to eq :error
+		expect(score.points).to eq [0,0]
 	end
-
 end
 
 describe Tennis, "#as_string" do
