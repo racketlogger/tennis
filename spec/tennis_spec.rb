@@ -102,7 +102,7 @@ describe Tennis, "#points" do
 
   it "checks invalid score: blank score '' " do
     score = Tennis.new("")
-    expect(score.points).to eq :error
+    expect(score.points).to eq [0,0]
   end
 
 end

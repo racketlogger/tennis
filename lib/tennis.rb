@@ -26,8 +26,8 @@ class Tennis
     return self.result.to_s
   end
 
-  # flip score ( P1-P2 to P2-P1)
-  # returns the flipped score in string
+  # flip score (P1-P2 to P2-P1)
+  # returns the flipped score asa string
   def flip
     flipped_score = ''
     (0...@scores.length).step(2).each do |i|
