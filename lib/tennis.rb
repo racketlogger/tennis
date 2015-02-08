@@ -24,21 +24,13 @@ class Tennis
   # to_s
   # return the score in string format
   def to_s
-    score = []
-    (0...@scores.length).step(2).each do |i|
-      score << [@scores[i], @scores[i+1]].join('-')
-    end
-    score.join(', ')
+    (0...@scores.length).step(2).map{ |i| [@scores[i], @scores[i+1]].join('-') }.join(', ')
   end
 
   # flip score ( P1-P2 to P2-P1)
-  # returns the flipped score in string
+  # returns the flipped score as a string
   def flipped
-    flipped_score = []
-    (0...@scores.length).step(2).each do |i|
-      flipped_score << [@scores[i+1], @scores[i]].join('-')
-    end
-    flipped_score.join(', ')
+    (0...@scores.length).step(2).map{ |i| [@scores[i+1], @scores[i]].join('-') }.join(', ')
   end
 
   # returns who won the match
@@ -48,7 +40,7 @@ class Tennis
   # 2 (player-2 won)
   def winner
     return @result if @result != :default
-    return @result = (@scores.length == 4) ? two_sets : three_sets
+    @result = (@scores.length == 4) ? two_sets : three_sets
   end
 
   # returns an array of points
@@ -57,7 +49,7 @@ class Tennis
   def points
     @result = winner
     (return [0, 0]) if @result == :error
-    return (complete_match_points if @result == 1 || @result == 2) || incomplete_match_points
+    (complete_match_points if @result == 1 || @result == 2) || incomplete_match_points
   end
 
   private
@@ -76,7 +68,7 @@ class Tennis
       end
     end
     # incomplete match e.g: 6-4,5-3
-    return (set_results[0] if set_results[0] == set_results[1]) || :incomplete_match
+    (set_results[0] if set_results[0] == set_results[1]) || :incomplete_match
   end
 
   # helper method: called by RESULT method for valid matches with 3 sets
@@ -95,7 +87,7 @@ class Tennis
     # checks if the result has been decided in the first 2 sets
     # but the 3rd set is also present in the input
     return :error if set_results[0] == set_results[1]
-    return  set_results.count(1) == 2 ? 1 : 2
+    set_results.count(1) == 2 ? 1 : 2
   end
 
   # helper method: called by POINTS for complete matches
@@ -106,7 +98,7 @@ class Tennis
     runner_up = (@result == 1) ? 2 : 1
     runner_up_points = player_points(runner_up)
     points[runner_up - 1] = runner_up_points < 8 ? runner_up_points : 8
-    return points
+    points
   end
 
   # helper method: called by POINTS for incomplete matches
@@ -116,7 +108,7 @@ class Tennis
     player_2_points = player_points(2)
     points[0] = player_1_points < 10 ? player_1_points : 10
     points[1] = player_2_points < 10 ? player_2_points : 10
-    return points
+    points
   end
 
   # helper method: returns the POINTS of a player given the player number
@@ -124,6 +116,6 @@ class Tennis
     player_scores = []
     @scores.each_with_index { |score, index| (player_scores << score; player +=2) if index == (player - 1) }
     player_scores = player_scores.sort! { |x, y| y <=> x }
-    return player_scores[0] + player_scores[1]
+    player_scores[0] + player_scores[1]
   end
 end

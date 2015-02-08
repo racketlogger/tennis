@@ -107,3 +107,24 @@ describe Tennis, "#points" do
 	end
 
 end
+
+describe Tennis, "#as_string" do
+	it "normalizes scores to a string properly formatted" do
+		scores = [["6-4,4-6, 6-4", "6-4, 4-6, 6-4"], [" 4-6,     4-6 ", "4-6, 4-6"],
+		 	[" 4 -6,     4- 6 ", "4-6, 4-6"], [" 0 - 6,     6    - 0,  3 -   6 ", "0-6, 6-0, 3-6"]]
+		scores.each do |s|
+			ts = Tennis.new(s[0])
+			expect(ts.to_s).to eq s[1]
+		end
+	end
+end
+
+describe Tennis, "#flipped" do
+	it "returns a normalized scores, but flipped" do
+		scores = [["6-4, 4-6, 6-4", "4-6, 6-4, 4-6"], ["6-4, 7-6", "4-6, 6-7"]]
+		scores.each do |s|
+			ts = Tennis.new(s[0])
+			expect(ts.flipped).to eq s[1]
+		end
+	end
+end
