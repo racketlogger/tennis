@@ -17,6 +17,10 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
+
 require 'bundler/setup'
 Bundler.setup
 require 'tennis'
