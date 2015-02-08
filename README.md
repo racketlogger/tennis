@@ -1,6 +1,6 @@
 # Tennis
 
-[![Gem Version](https://badge.fury.io/rb/tennis.svg)](http://badge.fury.io/rb/tennis) [![Build Status](https://travis-ci.org/racketlogger/tennis.svg)](https://travis-ci.org/racketlogger/tennis) [![Code Climate](https://codeclimate.com/github/racketlogger/tennis/badges/gpa.svg)](https://codeclimate.com/github/racketlogger/tennis)
+[![Gem Version](https://badge.fury.io/rb/tennis.svg)](http://badge.fury.io/rb/tennis) [![Build Status](https://travis-ci.org/racketlogger/tennis.svg)](https://travis-ci.org/racketlogger/tennis) [![Code Climate](https://codeclimate.com/github/racketlogger/tennis/badges/gpa.svg)](https://codeclimate.com/github/racketlogger/tennis) [![Test Coverage](https://codeclimate.com/github/racketlogger/tennis/badges/coverage.svg)](https://codeclimate.com/github/racketlogger/tennis)
 
 Ruby gem with utilities to manage, print and validate tennis scores
 
