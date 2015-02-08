@@ -6,7 +6,7 @@ class Tennis
     @result = (1 if scores == 'default-1') || (2 if scores == 'default-2') || :default
     if @result == :default
       # check blank input ''
-      @result = :error if @scores.any? { |score| score.nil? || score == 0 }
+      @result = :error if @scores.any? { |score| score.nil? }
       # to check if score for only 1 set has been input
       validation_1 = @scores.length == 2
       # to check if any input > 7
