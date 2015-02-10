@@ -4,21 +4,7 @@ class Tennis
   def initialize(scores)
     @scores = scores != 'default-1' && scores != 'default-2' ? scores.split(/[-,,]/).map(&:to_i) : scores
     @result = (1 if scores == 'default-1') || (2 if scores == 'default-2') || :default
-    if @result == :default
-      # check blank input ''
-      @result = :error if @scores.any? { |score| score.nil? }
-      # to check if score for only 1 set has been input
-      validation_1 = @scores.length == 2
-      # to check if any input > 7
-      validation_2 = @scores.any? { |score| score > 7 }
-      # to check if one of the input is 7 and the other is not 6
-      # bad tie break input
-      validation_3 = false
-      @scores.each_slice(2).each {|r| validation_3 = true if r.any? {|score| score == 7} && !r.any? {|score| score == 6} }
-      @result = :error if validation_1 || validation_2 || validation_3
-      # if set score is not complete eg: 4-6,7-6,4-1
-      @scores.each_slice(2).each {|r| @result = :incomplete_match if r[0] < 6 && r[1] < 6 } if @result != :error
-    end
+    validate_score if @result == :default
   end
 
   # to_s
@@ -39,7 +25,7 @@ class Tennis
   # 1 (player-1 won)
   # 2 (player-2 won)
   def winner
-    return @result if @result != :default
+    return @result unless @result == :default
     @result = (@scores.length == 4) ? two_sets : three_sets
   end
 
@@ -53,6 +39,23 @@ class Tennis
   end
 
   private
+
+  # helper method: to check score validation
+  def validate_score
+    # check blank input ''
+    validation_1 = @scores.any? { |score| score.nil? }
+    # to check if score for only 1 set has been input
+    validation_2 = @scores.length == 2
+    # to check if any input > 7
+    validation_3 = @scores.any? { |score| score > 7 }
+    # to check if one of the input is 7 and the other is not 6
+    # bad tie break input
+    validation_4 = false
+    @scores.each_slice(2).each {|r| validation_4 = true if r.any? {|score| score == 7} && !r.any? {|score| score == 6} }
+    @result = :error if validation_1 || validation_2 || validation_3 || validation_4
+    # if set score is not complete eg: 4-6,7-6,4-1
+    @scores.each_slice(2).each {|r| @result = :incomplete_match if r[0] < 6 && r[1] < 6 } unless @result == :error
+  end
 
   # helper method: called by RESULT method for valid matches with 2 sets
   def two_sets
