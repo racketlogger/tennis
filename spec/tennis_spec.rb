@@ -9,22 +9,22 @@ end
 describe Tennis, "#scores" do
 	it "finds the winner properly in two sets" do
 		score = Tennis.new("6-4, 6-4")
-		expect(score.winner).to eq 1
+		expect(score.winner).to eq 0
 	end
 
 	it "finds the winner properly in three sets" do
 		score = Tennis.new("4-6, 6-2, 3-6")
-		expect(score.winner).to eq 2
+		expect(score.winner).to eq 1
 	end
 
 	it "finds the winner properly in two sets with tie break" do
 		score = Tennis.new("6-4, 7-6")
-		expect(score.winner).to eq 1
+		expect(score.winner).to eq 0
 	end
 
 	it "finds the winner properly in three sets with tie break" do
 		score = Tennis.new("6-4, 6-7, 7-6")
-		expect(score.winner).to eq 1
+		expect(score.winner).to eq 0
 	end
 
 	it "reports incomplete match score (set 1-1)" do
@@ -123,6 +123,26 @@ describe Tennis, "#flipped" do
 		scores.each do |s|
 			ts = Tennis.new(s[0])
 			expect(ts.flipped).to eq s[1]
+		end
+	end
+end
+
+describe Tennis, "#set_count" do
+	it "returns the sets won by each player" do
+		scores = [["6-4, 4-6, 6-4", [2,1]],["6-2,6-1", [2,0]], ["7-6,4-6,6-4", [2,1]], ["6-4", [1,0]]]
+		scores.each do |s|
+			ts = Tennis.new(s[0])
+			expect(ts.set_count).to eq s[1]
+		end
+	end
+end
+
+describe Tennis, "#game_count" do
+	it "returns the games won by each player" do
+		scores = [["6-4, 4-6, 6-4", [16,14]],["6-2,6-1", [12,3]], ["7-6,4-6,6-4", [17,16]], ["6-4", [6,4]]]
+		scores.each do |s|
+			ts = Tennis.new(s[0])
+			expect(ts.game_count).to eq s[1]
 		end
 	end
 end
