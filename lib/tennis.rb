@@ -13,7 +13,7 @@ class Tennis
     # dfh -> default win for home player(0)
     # dfa -> default win for away player(1)
     @winner = :default
-    @scores =  validate_score(scores)
+    @scores = validate_score(scores)
     @winner = match_winner if @winner == :default
     @points = match_points
     unless @scores.is_a? String
