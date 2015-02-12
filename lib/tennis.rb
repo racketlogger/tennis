@@ -52,6 +52,16 @@ class Tennis
     (complete_match_points if @result == 1 || @result == 2) || incomplete_match_points
   end
 
+  # returns the number of sets won by the given player (0 or 1)
+  def sets_won(player)
+    @result = winner
+    sets = 0
+    (0...@scores.length).step(2).each do |i|
+      sets += 1 if @scores[player] > @scores[1-player]
+    end
+    sets
+  end
+
   private
 
   # helper method: called by RESULT method for valid matches with 2 sets
