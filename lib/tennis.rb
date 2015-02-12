@@ -6,7 +6,7 @@ class Tennis
   # points is an array: [points for 0 , points for 1]
   # set_count is an array: [sets won by 0, sets won by 1]
   # game_count is an array: [games won by 0, games won by 1]
-  
+
   attr_reader :winner, :points, :set_count, :game_count
 
   def initialize(scores)
@@ -14,11 +14,11 @@ class Tennis
     # dfa -> default win for away player(1)
     @winner = :default
     @scores =  validate_score(scores)
-    @winner = match_winner if @winner == :default 
+    @winner = match_winner if @winner == :default
     @points = match_points
     unless @scores.is_a? String
-      @set_count = sets_won 
-      @game_count = games_won 
+      @set_count = sets_won
+      @game_count = games_won
     end
   end
 
@@ -39,11 +39,11 @@ class Tennis
   # helper method: to check score validation
   def validate_score(scores_string)
     set_scores = scores_string.split(/[-,,]/).map(&:to_i)
-    if set_scores == [0] 
+    if set_scores == [0]
       # checks bad default string value reported
       @winner = (0 if scores == 'dfh') || (1 if scores == 'dfa') || :error
       scores_string
-    else  
+    else
       # check blank input ''
       validation_1 = set_scores.any? {|score| score.nil?}
       # to check if score for only 1 set has been input
@@ -75,7 +75,7 @@ class Tennis
   # returns (0,0) for bad input
   def match_points
     return [0, 0] if @winner == :error
-    return [@scores == 'dfh' ? 12 : 0 , @scores == 'dfa' ? 12 : 0] if @scores.is_a? String 
+    return [@scores == 'dfh' ? 12 : 0 , @scores == 'dfa' ? 12 : 0] if @scores.is_a? String
     @winner == 0 || @winner == 1 ? complete_match_points : incomplete_match_points
   end
 
@@ -138,7 +138,7 @@ class Tennis
   def complete_match_points
     points = [0, 0]
     points[@winner] = (@scores.length == 6) ? 12 : 14
-    runner_up = 1 - @winner 
+    runner_up = 1 - @winner
     runner_up_points = player_points(runner_up)
     points[runner_up] = runner_up_points < 8 ? runner_up_points : 8
     points
