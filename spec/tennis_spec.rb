@@ -136,22 +136,22 @@ describe Tennis, "#flipped" do
 	end
 end
 
-describe Tennis, "#set_count" do
-	it "returns the sets won by each player" do
-		scores = [["6-4, 4-6, 6-4", [2,1]],["6-2,6-1", [2,0]], ["7-6,4-6,6-4", [2,1]], ["6-4", [1,0]]]
+describe Tennis, "#sets_lost" do
+	it "returns the sets lost by each player" do
+		scores = [["6-4, 4-6, 6-4", [1,2]],["6-2,6-1", [0, 2]], ["7-6,4-6,6-4", [1, 2]], ["6-4", [0,1]]]
 		scores.each do |s|
 			ts = Tennis.new(s[0])
-			expect(ts.set_count).to eq s[1]
+			expect(ts.sets_lost).to eq s[1]
 		end
 	end
 end
 
-describe Tennis, "#game_count" do
+describe Tennis, "#games_lost" do
 	it "returns the games won by each player" do
-		scores = [["6-4, 4-6, 6-4", [16,14]],["6-2,6-1", [12,3]], ["7-6,4-6,6-4", [17,16]], ["6-4", [6,4]]]
+		scores = [["6-4, 4-6, 6-4", [14,16]],["6-2,6-1", [3, 12]], ["7-6,4-6,6-4", [16, 17]], ["6-4", [4,6]]]
 		scores.each do |s|
 			ts = Tennis.new(s[0])
-			expect(ts.game_count).to eq s[1]
+			expect(ts.games_lost).to eq s[1]
 		end
 	end
 end

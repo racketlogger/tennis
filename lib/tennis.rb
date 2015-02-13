@@ -4,10 +4,10 @@ class Tennis
   # player 1 is the home player(0) , player 2 is the away player(1)
   # winner is either 0 or 1
   # points is an array: [points for 0 , points for 1]
-  # set_count is an array: [sets won by 0, sets won by 1]
-  # game_count is an array: [games won by 0, games won by 1]
+  # sets_lost is an array: [sets lost by 0, sets lost by 1]
+  # games_lost is an array: [games won by 0, games won by 1]
 
-  attr_reader :winner, :points, :set_count, :game_count
+  attr_reader :winner, :points, :sets_lost, :games_lost
 
   def initialize(scores)
     # dfh -> default win for home player(0)
@@ -17,8 +17,8 @@ class Tennis
     @winner = match_winner if @winner == :default
     @points = match_points
     unless @scores.is_a? String
-      @set_count = sets_won
-      @game_count = games_won
+      @sets_lost = count_sets_lost
+      @games_lost = count_games_lost
     end
   end
 
@@ -79,7 +79,26 @@ class Tennis
     @winner == 0 || @winner == 1 ? complete_match_points : incomplete_match_points
   end
 
-  # returns the number of sets won by the given player (0 or 1)
+  # returns the number of sets lost by each player
+  def count_sets_lost
+    sets = [0, 0]
+    (0...@scores.length).step(2).each do |i|
+      @scores[i] > @scores[i + 1] ? sets[1] += 1 : sets[0] += 1
+    end
+    sets
+  end
+
+  # returns the number of won by each player
+  def count_games_lost
+    games = [0, 0]
+    (0...@scores.length).step(2).each do |i|
+      games[0] += @scores[i + 1]
+      games[1] += @scores[i]
+    end
+    games
+  end
+
+  # returns the number of sets won by each player
   def sets_won
     sets = [0, 0]
     (0...@scores.length).step(2).each do |i|
@@ -88,7 +107,7 @@ class Tennis
     sets
   end
 
-  # returns the number of  won by the given player (0 or 1)
+  # returns the number of won by each player
   def games_won
     games = [0, 0]
     (0...@scores.length).step(2).each do |i|
