@@ -1,4 +1,6 @@
 
+VERSION=0.1.6
+
 all:
 	rake spec
 
@@ -10,4 +12,4 @@ irb:
 
 # to push to rubygems
 push:
-	gem push tennis-0.1.1.gem
+	gem push tennis-$(VERSION).gem
