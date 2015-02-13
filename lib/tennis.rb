@@ -45,15 +45,15 @@ class Tennis
       scores_string
     else
       # check blank input ''
-      validation_1 = set_scores.any? {|score| score.nil?}
+      validation_1 = set_scores.any? { |score| score.nil? }
       # to check if score for only 1 set has been input
       validation_2 = set_scores.length == 2
       # to check if any input > 7
-      validation_3 = set_scores.any? {|score| score > 7}
+      validation_3 = set_scores.any? { |score| score > 7 }
       # to check if one of the input is 7 and the other is not 6
       # bad tie break input
       validation_4 = false
-      set_scores.each_slice(2).each {|r| validation_4 = true if r.any? {|score| score == 7} && !r.any? {|score| score == 6} }
+      set_scores.each_slice(2).each { |r| validation_4 = true if r.any? { |score| score == 7 } && !r.any? { |score| score == 6 || score == 5 } }
       @winner = :error if validation_1 || validation_2 || validation_3 || validation_4
       # if set score is not complete eg: 4-6,7-6,4-1
       set_scores.each_slice(2).each {|r| @winner = :incomplete_match if r[0] < 6 && r[1] < 6 } unless @winner == :error
@@ -75,7 +75,7 @@ class Tennis
   # returns (0,0) for bad input
   def match_points
     return [0, 0] if @winner == :error
-    return [@scores == 'dfh' ? 12 : 0 , @scores == 'dfa' ? 12 : 0] if @scores.is_a? String
+    return [@scores == 'dfh' ? 12 : 0, @scores == 'dfa' ? 12 : 0] if @scores.is_a? String
     @winner == 0 || @winner == 1 ? complete_match_points : incomplete_match_points
   end
 

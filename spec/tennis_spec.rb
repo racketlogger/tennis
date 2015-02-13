@@ -67,6 +67,10 @@ describe Tennis, "#scores" do
 		expect(score.winner).to eq :error
 	end
 
+	it "finds the winner properly in scores with 7-5" do
+		score = Tennis.new("3-6,5-7")
+		expect(score.winner).to eq 1
+	end
 end
 
 describe Tennis, "#points" do
@@ -103,6 +107,11 @@ describe Tennis, "#points" do
 	it "checks invalid score: blank score '' " do
 		score = Tennis.new("")
 		expect(score.points).to eq [0,0]
+	end
+
+	it "finds the points properly in scores with 7-5" do
+		score = Tennis.new("3-6,5-7")
+		expect(score.points).to eq [8,14]
 	end
 end
 
