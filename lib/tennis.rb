@@ -29,11 +29,11 @@ class Tennis
 
   private
 
-  def process_score(score)
+  def process_score(score, best_of=3)
     begin
       sets = score.split(/,/)
       # only take 2 to 5 sets
-      raise "invalid number of sets" unless (2..5).cover? sets.length
+      raise "invalid number of sets" unless (2..best_of).cover? sets.length
       score_plus_winner = map_scores_winners(sets)
       p score_plus_winner.inspect
       @set_winners = score_plus_winner.map{ |sw| sw[1] }
@@ -41,12 +41,11 @@ class Tennis
       away = @set_winners.count(1)
       raise "nobody won" if home + away == 0
       @winner = home > away ? 0 : away > home ? 1 : raise("no winner")
-      # sets won
-      @sets_won = [home, away]
-      # sets lost
-      @sets_lost = [away, home]
+      # sets won and lost
+      @sets_won, @sets_lost = [[home, away], [away, home]]
       # score array
       @score = score_plus_winner.map{ |sw| sw[0] }
+      @games_won, @games_lost = @score.transpose.map{ |games| games.inject{ |sum,x| sum + x } }
       # FIXME this is the only thing that assumes 3 sets
       raise "too many sets" if @set_winners[0] == @set_winners[1] and sets.size > 2
     rescue => e
