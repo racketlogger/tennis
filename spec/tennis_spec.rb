@@ -28,43 +28,35 @@ describe Tennis, "#scores" do
 	end
 
 	it "reports incomplete match score (set 1-1)" do
-		score = Tennis.new("6-4,4-6")
-		expect(score.winner).to eq :incomplete_match
+		expect { Tennis.new("6-4,4-6") }.to raise_error
 	end
 
 	it "reports incomplete match score (set incomplete)" do
-		score = Tennis.new("6-4,4-5")
-		expect(score.winner).to eq :incomplete_match
+		expect { Tennis.new("6-4,4-5") }.to raise_error
 	end
 
 	it "checks invalid score: difference in games won < 2" do
-		score = Tennis.new("6-5,4-6,7-6")
-		expect(score.winner).to eq :incomplete_match
+		expect { Tennis.new("6-5,4-6,7-6") }.to raise_error
 	end
 
 	it "checks invalid score: only 1 set input" do
-		score = Tennis.new("6-4")
-		expect(score.winner).to eq :error
+		expect {  Tennis.new("6-4") }.to raise_error
 	end
 
 	it "checks invalid score: winner decided in first 2 sets but 3rd set input" do
-		score = Tennis.new("6-4,6-4,4-6")
-		expect(score.winner).to eq :error
+		expect {  Tennis.new("6-4,6-4,4-6") }.to raise_error
 	end
 
 	it "checks invalid score: bad input for tie break" do
-		score = Tennis.new("7-0,4-6,6-2")
-		expect(score.winner).to eq :error
+		expect {  Tennis.new("7-0,4-6,6-2") }.to raise_error
 	end
 
 	it "checks invalid score: no score > 7" do
-		score = Tennis.new("8-4,2-6,6-1")
-		expect(score.winner).to eq :error
+		expect {  Tennis.new("8-4,2-6,6-1") }.to raise_error
 	end
 
 	it "checks invalid score: blank score '' " do
-		score = Tennis.new("")
-		expect(score.winner).to eq :error
+		expect {  Tennis.new("") }.to raise_error
 	end
 
 	it "finds the winner properly in scores with 7-5" do
