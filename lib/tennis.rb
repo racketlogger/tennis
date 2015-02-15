@@ -38,7 +38,7 @@ class Tennis
 
   # helper method: to check score validation
   def validate_score(scores_string)
-    set_scores = scores_string.split(/[-,,]/).map(&:to_i)
+    set_scores = scores_string.split(/[-,]/).map(&:to_i)
     if set_scores == [0]
       # checks bad default string value reported
       @winner = (0 if scores == 'dfh') || (1 if scores == 'dfa') || :error
