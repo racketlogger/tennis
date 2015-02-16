@@ -4,10 +4,10 @@ class Tennis
   # player 1 is the home player(0) , player 2 is the away player(1)
   # winner is either 0 or 1
   # points is an array: [points for 0 , points for 1]
-  # sets_lost is an array: [sets lost by 0, sets lost by 1]
-  # games_lost is an array: [games won by 0, games won by 1]
+  # sets_won/lost is an array: [sets won/lost by 0, sets won/lost by 1]
+  # games_won/lost is an array: [games won/lost by 0, games won/lost by 1]
 
-  attr_reader :winner, :points, :sets_lost, :games_lost
+  attr_reader :winner, :sets_won, :sets_lost, :games_won, :games_lost
 
   def initialize(score)
     # dfh -> default win for home player(0)
