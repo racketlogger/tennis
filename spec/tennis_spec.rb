@@ -67,36 +67,41 @@ end
 
 describe Tennis, "#points" do
 	it "returns 12 points in a three set win in a complete match" do
+		pending "points being implemented"
 		score = Tennis.new("6-4, 4-6, 6-4")
 		expect(score.points).to eq [12,8]
 	end
 
 	it "returns 14 points in two set win in a complete match" do
+		pending "points being implemented"
 		score = Tennis.new("4-6, 4-6")
 		expect(score.points).to eq [8,14]
 	end
 
 	it "returns a max of 8 points for the runners up in a complete match" do
+		pending "points being implemented"
 		score = Tennis.new("4-6, 6-2, 3-6")
 		expect(score.points).to eq [8,12]
 	end
 
 	it "return a max of 10 points for each player in an incomplete match" do
+		pending "points being implemented"
 		score = Tennis.new("7-6,6-7")
 		expect(score.points).to eq [10,10]
 	end
 
 	it "return a max of 10 points for each player in an incomplete match" do
+		pending "points being implemented"
 		score = Tennis.new("7-6,4-6,4-1")
 		expect(score.points).to eq [10,10]
 	end
 
 	it "return [0,0] for bad input" do
-		score = Tennis.new("8-1")
-		expect(score.points).to eq [0,0]
+		expect { Tennis.new("8-1") }.to raise_error
 	end
 
 	it "finds the points properly in scores with 7-5" do
+		pending "points being implemented"
 		score = Tennis.new("3-6,5-7")
 		expect(score.points).to eq [8,14]
 	end
@@ -125,7 +130,7 @@ end
 
 describe Tennis, "#sets_lost" do
 	it "returns the sets lost by each player" do
-		scores = [["6-4, 4-6, 6-4", [1,2]],["6-2,6-1", [0, 2]], ["7-6,4-6,6-4", [1, 2]], ["6-4", [0,1]]]
+		scores = [["6-4, 4-6, 6-4", [1,2]],["6-2,6-1", [0, 2]], ["7-6,4-6,6-4", [1, 2]], ["6-4, 6-1", [0, 2]]]
 		scores.each do |s|
 			ts = Tennis.new(s[0])
 			expect(ts.sets_lost).to eq s[1]
@@ -135,7 +140,7 @@ end
 
 describe Tennis, "#games_lost" do
 	it "returns the games won by each player" do
-		scores = [["6-4, 4-6, 6-4", [14,16]],["6-2,6-1", [3, 12]], ["7-6,4-6,6-4", [16, 17]], ["6-4", [4,6]]]
+		scores = [["6-4, 4-6, 6-4", [14,16]],["6-2,6-1", [3, 12]], ["7-6,4-6,6-4", [16, 17]], ["6-4, 7-5", [9, 13]]]
 		scores.each do |s|
 			ts = Tennis.new(s[0])
 			expect(ts.games_lost).to eq s[1]

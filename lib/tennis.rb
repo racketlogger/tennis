@@ -35,7 +35,6 @@ class Tennis
       # only take 2 to 5 sets
       raise "invalid number of sets" unless (2..best_of).cover? sets.length
       score_plus_winner = map_scores_winners(sets)
-      p score_plus_winner.inspect
       @set_winners = score_plus_winner.map{ |sw| sw[1] }
       home = @set_winners.count(0)
       away = @set_winners.count(1)
@@ -45,7 +44,8 @@ class Tennis
       @sets_won, @sets_lost = [[home, away], [away, home]]
       # score array
       @score = score_plus_winner.map{ |sw| sw[0] }
-      @games_won, @games_lost = @score.transpose.map{ |games| games.inject{ |sum,x| sum + x } }
+      @games_won = @score.transpose.map{ |games| games.inject{ |sum,x| sum + x } }
+      @games_lost = @games_won.reverse
       # FIXME this is the only thing that assumes 3 sets
       raise "too many sets" if @set_winners[0] == @set_winners[1] and sets.size > 2
     rescue => e
