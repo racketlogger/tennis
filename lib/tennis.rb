@@ -60,14 +60,21 @@ class Tennis
       games = set.split(/-/).map(&:to_i)
       raise "uneven games in set '#{set}'" unless games.length == 2
       h, a = games
-      sw = set_winner(h, a)
+      sw = set_winner(h, a, set == sets.last)
       raise "no valid winner in set '#{set}'" unless sw
       [games, sw]
     end
   end
 
   # determine the set winner for home and away, or else return nil
-  def set_winner(h, a)
+  def set_winner(h, a, last_set = false)
+    if last_set
+      return nil unless h > 5 or a > 5
+      # either tie-break or else difference of one+
+      return nil unless h + a == 13 or h > a + 1 or a > h + 1
+      return nil if h + a > 13 and (h-a).abs != 2
+      return h > a ? 0 : 1
+    end
     # basic range check
     return nil if h > 7 or a > 7 or h < 0 or a < 0
     # game went to 7
