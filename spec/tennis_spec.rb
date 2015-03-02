@@ -32,8 +32,22 @@ describe Tennis, "#scores" do
 		expect(score.winner).to eq 0
 	end
 
+	it "finds the winner properly in three sets with last set to 7-5" do
+		score = Tennis.new("6-4, 6-7, 7-5")
+		expect(score.winner).to eq 0
+	end
+
+	it "finds the winner properly in three sets with last set to 8-6" do
+		score = Tennis.new("6-4, 6-7, 8-6")
+		expect(score.winner).to eq 0
+	end
+
 	it "report error is the last set is off by more than 2" do
 		expect { Tennis.new("6-4, 6-7, 18-15") }.to raise_error
+	end
+
+	it "report error is the last set is off by more than 2" do
+		expect { Tennis.new("6-4, 6-7, 8-7") }.to raise_error
 	end
 
 	it "reports incomplete match score (set 1-1)" do
