@@ -1,15 +1,16 @@
 
-VERSION=0.3.0
+# NOTE: this needs to be changed in lib/tennis/version.rb at the same time!
+VERSION=0.4.0
 
 all:
-	rake spec
+	bundle exec rake spec
 
 build:
-	gem build tennis.gemspec
+	bundle exec gem build tennis.gemspec
 
 irb:
-	irb -Ilib -rtennis
+	bundle exec irb -Ilib -rtennis
 
 # to push to rubygems
 push:
-	gem push tennis-$(VERSION).gem
+	bundle exec gem push tennis-$(VERSION).gem

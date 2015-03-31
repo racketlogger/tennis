@@ -7,27 +7,66 @@ class Tennis
   # sets_won/lost is an array: [sets won/lost by 0, sets won/lost by 1]
   # games_won/lost is an array: [games won/lost by 0, games won/lost by 1]
 
+  # representation of defaults:
+  #
+  # p0-<reason> means player 0 won, e.g. p0-win-by-forfeit
+  # p1-<reason> means player 1 won
+  #
+  # the reason is ignored for the purposes of this gem.
+  # possible reason fields are: win-by-forfeit, win-by-retired, win-by-no-show
+  #
+
   attr_reader :winner, :sets_won, :sets_lost, :games_won, :games_lost
 
   def initialize(score)
-    # dfh -> default win for home player(0)
-    # dfa -> default win for away player(1)
+    # check if it's a default first:
+    if score =~ /^p/
+      process_default(score)
+      @default = true
+      return
+    end
+    @default = false
     process_score(score)
   end
 
   # to_s
   # return the score in string format
   def to_s
-    @score.map{|set| set.join('-') }.join(', ')
+    @default ? "Default" : @score.map{|set| set.join('-') }.join(', ')
   end
 
   # flip score ( P1-P2 to P2-P1)
   # returns the flipped score as a string
   def flipped
-    @score.map{|set| set.reverse.join('-') }.join(', ')
+    @default ? "Default" : @score.map{|set| set.reverse.join('-') }.join(', ')
+  end
+
+  def score
+    @default ? "Default" : @score
+  end
+
+  def default?
+    @default
   end
 
   private
+
+  def process_default(default)
+    @score = default
+    if default =~ /p0-win/
+      # process as 6-0, 6-0
+      @winner = 0
+      @sets_won, @sets_lost = [[2, 0], [0, 2]]
+      @games_won, @games_lost = [[12, 0], [0, 12]]
+    elsif default =~ /p1-win/
+      # process as 0-6, 0-6
+      @winner = 1
+      @sets_won, @sets_lost = [[0, 2], [2, 0]]
+      @games_won, @games_lost = [[0, 12], [12, 0]]
+    else
+      raise "Invalid default score report: '#{default}'"
+    end
+  end
 
   def process_score(score, best_of=3)
     begin

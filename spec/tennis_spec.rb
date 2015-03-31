@@ -132,3 +132,26 @@ describe Tennis, "#games_lost" do
 		end
 	end
 end
+
+describe Tennis, "#defaults" do
+	it "finds the winner properly in a default" do
+		score = Tennis.new("p0-win-by-something")
+		expect(score.winner).to eq 0
+		expect(score.sets_won).to eq [2, 0]
+		expect(score.games_won).to eq [12, 0]
+		expect(score.to_s).to eq "Default"
+	end
+
+	it "finds the winner properly in a default" do
+		score = Tennis.new("p1-win-by-something")
+		expect(score.winner).to eq 1
+		expect(score.sets_won).to eq [0, 2]
+		expect(score.games_won).to eq [0, 12]
+		expect(score.to_s).to eq "Default"
+	end
+
+	it "reports some error in a bad default" do
+		expect { Tennis.new("p2-blah") }.to raise_error
+	end
+
+end
