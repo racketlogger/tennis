@@ -23,7 +23,63 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The gem assumes a score can be two or three sets (5 sets is partially supported, however it has bugs and it's not well tested).
+
+The gem does a little processing on the input for some spacing, etc.
+
+There are two players: **0 (home player) and 1 (away player)**
+
+Results refer to players 0 and 1 and are typically indexed for players 0 and 1. If a result has an array, it will typically have something (e.g. games won) for player 0 in index 0 and for player 1 in index 1.
+
+```ruby
+irb> sc = Tennis.new("7-6,  4-6 , 6 - 2")
+=> #<Tennis:....>
+irb> sc.winner
+=> 0            # this means the winner is the first player, a.k.a. player 0 or "home player"
+irb> sc.sets_won
+=> [2, 1]       # two sets one by player 0, one set by player 1
+irb> sc.sets_lost
+=> [1, 2]
+irb> sc.games_won
+=> [17, 14]
+irb> score.games_lost
+=> [14, 17]
+irb> sc.to_s
+=> "7-6, 4-6, 6-2"    # cleanly formatted score, as a string
+irb> sc.flipped
+=> "6-7, 6-4, 2-6"    # "flipped" score, from player 1's perspective
+irb> sc.score         # score as an array of sets (each an array with player 0 and 1 scores)
+=> [[7, 6], [4, 6], [6, 2]]
+irb> sc.default?      # was this score a default?
+=> false
+irb(main):022:0>
+```
+
+### Defaults
+
+The library supports a form of arbitrary (callers-epcific) defaults: any score starting with a `p` is considered a default, for example:
+
+ * p0-win-<reason> means player 0 won, e.g. p0-win-by-forfeit
+ * p1-win-<reason> means player 1 won, e.g. p1-win-by-retirement
+
+```ruby
+irb> sc = Tennis.new("p1-win-injured")
+=> #<Tennis:0x007fa6cba9dcf0 @score="p1-win-injured", @winner=1, @sets_lost=[2, 0], @sets_won=[0, 2], @games_won=[0, 12], @games_lost=[12, 0], @default=true>
+irb> sc.winner
+=> 1
+irb> sc.sets_won
+=> [0, 2]
+irb> sc.games_won
+=> [0, 12]
+irb> sc.score
+=> "Default"
+irb> sc.to_s
+=> "Default"
+irb> sc.flipped
+=> "Default"
+irb> sc.default?
+=> true
+```
 
 ## Contributing
 
