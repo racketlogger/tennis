@@ -52,7 +52,6 @@ irb> sc.score         # score as an array of sets (each an array with player 0 a
 => [[7, 6], [4, 6], [6, 2]]
 irb> sc.default?      # was this score a default?
 => false
-irb(main):022:0>
 ```
 
 ### Defaults
@@ -64,7 +63,7 @@ The library supports a form of arbitrary (callers-epcific) defaults: any score s
 
 ```ruby
 irb> sc = Tennis.new("p1-win-injured")
-=> #<Tennis:0x007fa6cba9dcf0 @score="p1-win-injured", @winner=1, @sets_lost=[2, 0], @sets_won=[0, 2], @games_won=[0, 12], @games_lost=[12, 0], @default=true>
+=> #<Tennis:....>
 irb> sc.winner
 => 1
 irb> sc.sets_won
