@@ -80,6 +80,10 @@ irb> sc.default?
 => true
 ```
 
+## To Do
+
+Proper support for 5-set matches. At the moment it kind of works for 5-set matches, however, it has not been tested and it probably is working in some edge conditions (and may be in some major ways).
+
 ## Contributing
 
 1. Fork it ( https://github.com/racketlogger/tennis/fork )
