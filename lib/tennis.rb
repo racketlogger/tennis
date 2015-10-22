@@ -53,18 +53,18 @@ class Tennis
 
   def process_default(default)
     @score = default
+    @sets_won, @sets_lost = [[2, 0], [0, 2]]
+    @games_won, @games_lost = [[12, 0], [0, 12]]
     if default =~ /p0-win/
       # process as 6-0, 6-0
       @winner = 0
-      @sets_won, @sets_lost = [[2, 0], [0, 2]]
-      @games_won, @games_lost = [[12, 0], [0, 12]]
     elsif default =~ /p1-win/
       # process as 0-6, 0-6
       @winner = 1
-      @sets_won, @sets_lost = [[0, 2], [2, 0]]
-      @games_won, @games_lost = [[0, 12], [12, 0]]
+      @sets_won, @sets_lost = [@sets_lost, @sets_won]
+      @games_won, @games_lost = [@games_lost, @games_won]
     else
-      raise "Invalid default score report: '#{default}'"
+      raise ArgumentError, "invalid default score report: '#{default}'"
     end
   end
 
@@ -72,12 +72,12 @@ class Tennis
     begin
       sets = score.split(/,/)
       # only take 2 to 5 sets
-      raise "invalid number of sets" unless (2..best_of).cover? sets.length
+      raise ArgumentError, "invalid number of sets in '#{score}'" unless (2..best_of).cover? sets.length
       score_plus_winner = map_scores_winners(sets)
       @set_winners = score_plus_winner.map{ |sw| sw[1] }
       home = @set_winners.count(0)
       away = @set_winners.count(1)
-      raise "nobody won" if home + away == 0
+      raise ArgumentError, "nobody won in '#{score}'" if home + away == 0
       @winner = home > away ? 0 : away > home ? 1 : raise("no winner")
       # sets won and lost
       @sets_won, @sets_lost = [[home, away], [away, home]]
@@ -86,9 +86,9 @@ class Tennis
       @games_won = @score.transpose.map{ |games| games.inject{ |sum,x| sum + x } }
       @games_lost = @games_won.reverse
       # FIXME this is the only thing that assumes 3 sets
-      raise "too many sets" if @set_winners[0] == @set_winners[1] and sets.size > 2
+      raise "too many sets in '#{score}'" if @set_winners[0] == @set_winners[1] and sets.size > 2
     rescue => e
-      raise ArgumentError, "Invalid score '#{score}': #{e}"
+      raise ArgumentError, "invalid score '#{score}': #{e}"
     end
   end
 
@@ -100,7 +100,7 @@ class Tennis
       raise "uneven games in set '#{set}'" unless games.length == 2
       h, a = games
       sw = set_winner(h, a, set == sets.last)
-      raise "no valid winner in set '#{set}'" unless sw
+      raise ArgumentError, "no valid winner in set '#{set}'" unless sw
       [games, sw]
     end
   end

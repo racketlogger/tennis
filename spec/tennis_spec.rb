@@ -43,43 +43,43 @@ describe Tennis, "#scores" do
 	end
 
 	it "report error is the last set is off by more than 2" do
-		expect { Tennis.new("6-4, 6-7, 18-15") }.to raise_error
+		expect { Tennis.new("6-4, 6-7, 18-15") }.to raise_error(ArgumentError)
 	end
 
 	it "report error is the last set is off by more than 2" do
-		expect { Tennis.new("6-4, 6-7, 8-7") }.to raise_error
+		expect { Tennis.new("6-4, 6-7, 8-7") }.to raise_error(ArgumentError)
 	end
 
 	it "reports incomplete match score (set 1-1)" do
-		expect { Tennis.new("6-4,4-6") }.to raise_error
+		expect { Tennis.new("6-4,4-6") }.to raise_error(ArgumentError)
 	end
 
 	it "reports incomplete match score (set incomplete)" do
-		expect { Tennis.new("6-4,4-5") }.to raise_error
+		expect { Tennis.new("6-4,4-5") }.to raise_error(ArgumentError)
 	end
 
 	it "checks invalid score: difference in games won < 2" do
-		expect { Tennis.new("6-5,4-6,7-6") }.to raise_error
+		expect { Tennis.new("6-5,4-6,7-6") }.to raise_error(ArgumentError)
 	end
 
 	it "checks invalid score: only 1 set input" do
-		expect {  Tennis.new("6-4") }.to raise_error
+		expect {  Tennis.new("6-4") }.to raise_error(ArgumentError)
 	end
 
 	it "checks invalid score: winner decided in first 2 sets but 3rd set input" do
-		expect {  Tennis.new("6-4,6-4,4-6") }.to raise_error
+		expect {  Tennis.new("6-4,6-4,4-6") }.to raise_error(ArgumentError)
 	end
 
 	it "checks invalid score: bad input for tie break" do
-		expect {  Tennis.new("7-0,4-6,6-2") }.to raise_error
+		expect {  Tennis.new("7-0,4-6,6-2") }.to raise_error(ArgumentError)
 	end
 
 	it "checks invalid score: no score > 7" do
-		expect {  Tennis.new("8-4,2-6,6-1") }.to raise_error
+		expect {  Tennis.new("8-4,2-6,6-1") }.to raise_error(ArgumentError)
 	end
 
 	it "checks invalid score: blank score ''" do
-		expect { Tennis.new("") }.to raise_error
+		expect { Tennis.new("") }.to raise_error(ArgumentError)
 	end
 
 	it "finds the winner properly in scores with 7-5" do
@@ -88,7 +88,7 @@ describe Tennis, "#scores" do
 	end
 
 	it "raises exception for bad input" do
-		expect { Tennis.new("8-1") }.to raise_error
+		expect { Tennis.new("8-1") }.to raise_error(ArgumentError)
 	end
 end
 
@@ -151,7 +151,7 @@ describe Tennis, "#defaults" do
 	end
 
 	it "reports some error in a bad default" do
-		expect { Tennis.new("p2-blah") }.to raise_error
+		expect { Tennis.new("p2-blah") }.to raise_error(ArgumentError)
 	end
 
 end
