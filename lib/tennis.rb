@@ -68,7 +68,7 @@ class Tennis
       @sets_won, @sets_lost = [@sets_lost, @sets_won]
       @games_won, @games_lost = [@games_lost, @games_won]
     else
-      fail ArgumentError, "invalid default score report: '#{default}'"
+      raise ArgumentError, "invalid default score report: '#{default}'"
     end
   end
 
@@ -87,12 +87,12 @@ class Tennis
       @sets_won, @sets_lost = [[home, away], [away, home]]
       # score array
       @score = score_plus_winner.map { |sw| sw[0] }
-      @games_won = @score.transpose.map { |games| games.inject{ |sum, x| sum + x } }
+      @games_won = @score.transpose.map { |games| games.inject { |sum, x| sum + x } }
       @games_lost = @games_won.reverse
       # FIXME: this is the only thing that assumes 3 sets
       fail 'too many sets' if @set_winners[0] == @set_winners[1] && sets.size > 2
     rescue => e
-      fail ArgumentError, "invalid score '#{score}': #{e}"
+      raise ArgumentError, "invalid score '#{score}': #{e}"
     end
   end
 
